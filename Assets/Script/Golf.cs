@@ -74,6 +74,17 @@ public class GolfBall : MonoBehaviour
         Debug.Log("หยุดลูกกอล์ฟและรีเซ็ตหน้าลูกกอล์ฟกลับเป็นค่าเดิมเรียบร้อยแล้ว");
     }
 
-
+    private void OnTriggerEnter(Collider other)
+    {
+        // ตรวจสอบว่าวัตถุที่ชนมี Tag ชื่อ "Hole" หรือไม่
+        if (other.CompareTag("Hole"))
+        {
+            if (GameManager.Instance != null)
+            {
+                // ส่ง GameObject ลูกกอล์ฟตัวนี้ไปให้ GameManager ทำลายและสั่ง GameOver
+                GameManager.Instance.GameOver(gameObject);
+            }
+        }
+    }
 
 }

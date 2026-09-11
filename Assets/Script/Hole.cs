@@ -10,8 +10,11 @@ public class Hole : MonoBehaviour
         {
             Debug.Log("ลูกกอล์ฟลงหลุมแล้ว! จบเกมทันที");
 
-            // เรียกฟังก์ชันจบเกม
-            GameManager.Instance.GameOver();
+            // ส่ง GameObject ของลูกกอล์ฟ (other.gameObject) ไปให้ GameManager ทำลายและสั่งจบเกม
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.GameOver(other.gameObject);
+            }
         }
     }
 }
