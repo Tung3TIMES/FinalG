@@ -5,31 +5,13 @@ public class Hole : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        // ตรวจสอบว่าวัตถุที่ตกลงไปคือลูกกอล์ฟหรือไม่ (โดยเช็คจาก Tag)
+        // ตรวจสอบว่าสิ่งที่ตกลงมาคือลูกกอล์ฟ (เช็คจาก Tag "GolfBall")
         if (other.CompareTag("GolfBall"))
         {
-            // เรียกใช้งานระบบจัดการคะแนน
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.AddHoleScore();
-            }
+            Debug.Log("ลูกกอล์ฟลงหลุมแล้ว! จบเกมทันที");
 
-            // ตัวอย่างเพิ่มเติม: ซ่อนลูกกอล์ฟหรือเล่นเสียงเอฟเฟกต์
-            HandleBallInHole(other.gameObject);
+            // เรียกฟังก์ชันจบเกม
+            GameManager.Instance.GameOver();
         }
-    }
-
-    private void HandleBallInHole(GameObject ball)
-    {
-        // ตัวอย่างการหยุดการเคลื่อนที่ของลูกกอล์ฟ
-        Rigidbody rb = ball.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            ball.SetActive(false); // ซ่อนลูกกอล์ฟ
-        }
-
-        // สามารถเพิ่มการเรียกใช้งาน UI ชนะเกม หรือเปลี่ยนฉาก (Scene) ตรงนี้ได้
     }
 }

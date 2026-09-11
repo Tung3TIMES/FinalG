@@ -5,16 +5,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [Header("Game Statistics")]
-    public int totalScore = 0;
-    public int strokesCount = 0; // จำนวนครั้งที่ตี
+    [Header("UI / Panels")]
+    public GameObject gameOverPanel; // (ทางเลือก) หน้าต่าง UI จบเกม
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -22,17 +20,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ฟังก์ชันเพิ่มคะแนนเมื่อลงหลุม
-    const int HoleInBonus = 100;
-    public void AddHoleScore()
+    public void GameOver()
     {
-        totalScore += HoleInBonus;
-        Debug.Log($"ลูกกอล์ฟลงหลุมแล้ว! คะแนนรวมปัจจุบัน: {totalScore}");
-    }
+        // หยุดเวลาในเกม (ถ้าต้องการให้ทุกอย่างหยุดนิ่ง)
+        Time.timeScale = 0f;
 
-    // ฟังก์ชันนับจำนวนครั้งที่ตี (Stroke)
-    public void AddStroke()
-    {
-        strokesCount++;
+        // แสดง UI จบเกม (ถ้ามีเซ็ตไว้)
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
     }
 }
