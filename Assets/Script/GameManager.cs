@@ -6,7 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     [Header("UI / Panels")]
-    public GameObject gameOverPanel; // หน้าต่าง UI จบเกม
+    public GameObject gameOverPanel;
+
+    [Header("Ball Elements")]
+    [SerializeField] private GameObject lineObject; // ลาก GameObject "Line" มาใส่ตรงนี้
 
     private void Awake()
     {
@@ -20,24 +23,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ปรับ Method ให้รับ GameObject ของลูกกอล์ฟเข้ามาเพื่อทำลายก่อนจบเกม
+    // Method ควบคุมการเปิด/ปิด Line
+    public void SetLineActive(bool isActive)
+    {
+        if (lineObject != null)
+        {
+            lineObject.SetActive(isActive);
+        }
+    }
+
     public void GameOver(GameObject ball)
     {
-        // 1. ทำลายลูกกอล์ฟทันทีเมื่อลงหลุม
         if (ball != null)
         {
             Destroy(ball);
         }
 
-        // 2. แสดง UI จบเกม (ถ้ามีเซ็ตไว้)
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
         }
 
-        // 3. หยุดเวลาในเกม
         Time.timeScale = 0f;
-
         Debug.Log("ลูกกอล์ฟลงหลุมแล้ว! จบเกม (Game Over)");
     }
 
